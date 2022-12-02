@@ -1,20 +1,15 @@
 {
 	"compilerOptions": {
-		"target": "es5",
+		"module": "ESNext",
+		"target": "ESNext",
 		"newLine": "LF",
 		"noUnusedLocals": true,
 		"strictNullChecks": true,
-		"outFile": "../loader.js",
+		"outDir": "../loader",
 		"declaration": true
 	},
-	"files": [
-		"env.ts",
-		"loaderEvents.ts",
-		"utils.ts",
-		"configuration.ts",
-		"scriptLoader.ts",
-		"moduleManager.ts",
-		"main.ts"
+	"include": [
+		"*.ts"
 	],
 	"exclude": [
 		"node_modules"
