@@ -2,26 +2,12 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-'use strict';
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+import { Environment } from './env.js';
+export const AMDLoader = {};
 
-var _amdLoaderGlobal = this;
-var _commonjsGlobal = typeof global === 'object' ? global : {};
-const AMDLoader = globalThis.module && module.exports | {};
 (async () => {
-
-
-    AMDLoader.global = _amdLoaderGlobal;
-    AMDLoader.Environment = await new (await import('./loader/env.js')).Environment();
-
-    /*---------------------------------------------------------------------------------------------
-     *  Copyright (c) Microsoft Corporation. All rights reserved.
-     *  Licensed under the MIT License. See License.txt in the project root for license information.
-     *--------------------------------------------------------------------------------------------*/
-
+    AMDLoader.global = globalThis;
+    AMDLoader.Environment = new Environment();
 
     var LoaderEvent = /** @class */ (function () {
         function LoaderEvent(type, detail, timestamp) {
@@ -58,13 +44,6 @@ const AMDLoader = globalThis.module && module.exports | {};
         return NullLoaderEventRecorder;
     }());
     AMDLoader.NullLoaderEventRecorder = NullLoaderEventRecorder;
-
-    /*---------------------------------------------------------------------------------------------
-     *  Copyright (c) Microsoft Corporation. All rights reserved.
-     *  Licensed under the MIT License. See License.txt in the project root for license information.
-     *--------------------------------------------------------------------------------------------*/
-
-
     var Utilities = /** @class */ (function () {
         function Utilities() {
         }
@@ -161,12 +140,6 @@ const AMDLoader = globalThis.module && module.exports | {};
         return Utilities;
     }());
     AMDLoader.Utilities = Utilities;
-
-    /*---------------------------------------------------------------------------------------------
-     *  Copyright (c) Microsoft Corporation. All rights reserved.
-     *  Licensed under the MIT License. See License.txt in the project root for license information.
-     *--------------------------------------------------------------------------------------------*/
-
 
     function ensureError(err) {
         if (err instanceof Error) {
@@ -487,12 +460,6 @@ const AMDLoader = globalThis.module && module.exports | {};
         return Configuration;
     }());
     AMDLoader.Configuration = Configuration;
-
-    /*---------------------------------------------------------------------------------------------
-     *  Copyright (c) Microsoft Corporation. All rights reserved.
-     *  Licensed under the MIT License. See License.txt in the project root for license information.
-     *--------------------------------------------------------------------------------------------*/
-
     /**
      * Load `scriptSrc` only once (avoid multiple <script> tags)
      */
@@ -999,12 +966,6 @@ const AMDLoader = globalThis.module && module.exports | {};
         return new OnlyOnceScriptLoader(env);
     }
     AMDLoader.createScriptLoader = createScriptLoader;
-
-    /*---------------------------------------------------------------------------------------------
-     *  Copyright (c) Microsoft Corporation. All rights reserved.
-     *  Licensed under the MIT License. See License.txt in the project root for license information.
-     *--------------------------------------------------------------------------------------------*/
-
 
     // ------------------------------------------------------------------------
     // ModuleIdResolver
@@ -1768,9 +1729,6 @@ const AMDLoader = globalThis.module && module.exports | {};
     AMDLoader.ModuleManager = ModuleManager;
 
     let define;
-
-
-    var env = AMDLoader.Environment = await (await import('./loader/env.js')).Environment();;
     var moduleManager = null;
     var DefineFunc = function (id, dependencies, callback) {
         if (typeof id !== 'string') {

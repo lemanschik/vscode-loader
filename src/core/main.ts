@@ -5,12 +5,12 @@
 
 'use strict';
 
-import { IConfigurationOptions, IDefineFunc, IRequireFunc } from "./configuration";
-import { Environment, global } from "./env";
-import { LoaderEvent } from "./loaderEvents";
-import { IBuildModuleInfo, ModuleManager } from "./moduleManager";
-import { createScriptLoader, ensureRecordedNodeRequire } from "./scriptLoader";
-import { Utilities } from "./utils";
+import { IConfigurationOptions, IDefineFunc, IRequireFunc } from "./configuration.js";
+import { Environment, global } from "./env.js";
+import { LoaderEvent } from "./loaderEvents.js";
+import { IBuildModuleInfo, ModuleManager } from "./moduleManager.js";
+import { createScriptLoader, ensureRecordedNodeRequire } from "./scriptLoader.js";
+import { Utilities } from "./utils.js";
 
 // Limitation: To load jquery through the loader, always require 'jquery' and add a path for it in the loader configuration
 
@@ -18,8 +18,6 @@ declare var doNotInitLoader;
 var define;
 
 const env = new Environment();
-
-let moduleManager: ModuleManager = null!;
 
 const DefineFunc: IDefineFunc = <any>function (id: any, dependencies: any, callback: any): void {
 	if (typeof id !== 'string') {
@@ -67,6 +65,12 @@ const RequireFunc: IRequireFunc = <any>function () {
 	throw new Error('Unrecognized require call');
 };
 RequireFunc.config = _requireFunc_config;
+
+RequireFunc.define = DefineFunc;
+
+
+const moduleManager = new ModuleManager(env, createScriptLoader(env), DefineFunc, RequireFunc, Utilities.getHighPerformanceTimestamp());
+
 RequireFunc.getConfig = function (): IConfigurationOptions {
 	return moduleManager.getConfig().getOptionsLiteral();
 };
@@ -79,7 +83,6 @@ RequireFunc.getBuildInfo = function (): IBuildModuleInfo[] | null {
 RequireFunc.getStats = function (): LoaderEvent[] {
 	return moduleManager.getLoaderEvents();
 };
-RequireFunc.define = DefineFunc;
 
 export function init(): void {
 	if (typeof global.require !== 'undefined' || typeof require !== 'undefined') {
@@ -103,21 +106,20 @@ export function init(): void {
 	}
 }
 
-if (typeof global.define !== 'function' || !global.define.amd) {
-	moduleManager = new ModuleManager(env, createScriptLoader(env), DefineFunc, RequireFunc, Utilities.getHighPerformanceTimestamp());
 
-	// The global variable require can configure the loader
-	if (typeof global.require !== 'undefined' && typeof global.require !== 'function') {
-		RequireFunc.config(global.require);
-	}
 
-	// This define is for the local closure defined in node in the case that the loader is concatenated
-	define = function () {
-		return DefineFunc.apply(null, arguments);
-	};
-	define.amd = DefineFunc.amd;
 
-	if (typeof doNotInitLoader === 'undefined') {
-		init();
-	}
+// The global variable require can configure the loader
+
+RequireFunc.config(async (specifier: string) => await import(specifier));
+
+
+// This define is for the local closure defined in node in the case that the loader is concatenated
+define = function () {
+	return DefineFunc.apply(null, arguments);
+};
+define.amd = DefineFunc.amd;
+
+if (typeof doNotInitLoader === 'undefined') {
+	init();
 }

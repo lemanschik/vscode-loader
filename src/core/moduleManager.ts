@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { AnnotatedError, AnnotatedFactoryError, AnnotatedLoadingError, Configuration, ensureError, IConfigurationOptions, IDefineFunc, IRequireFunc } from "./configuration";
-import { Environment, global } from "./env";
-import { ILoaderEventRecorder, LoaderEvent, LoaderEventRecorder, LoaderEventType, NullLoaderEventRecorder } from "./loaderEvents";
-import { IScriptLoader } from "./scriptLoader";
-import { Utilities } from "./utils";
+import { AnnotatedError, AnnotatedFactoryError, AnnotatedLoadingError, Configuration, ensureError, IConfigurationOptions, IDefineFunc, IRequireFunc } from "./configuration.js";
+import { Environment, global } from "./env.js";
+import { ILoaderEventRecorder, LoaderEvent, LoaderEventRecorder, LoaderEventType, NullLoaderEventRecorder } from "./loaderEvents.js";
+import { IScriptLoader } from "./scriptLoader.js";
+import { Utilities } from "./utils.js";
 
 export interface ILoaderPlugin {
 	load: (pluginParam: string, parentRequire: IRelativeRequire, loadCallback: IPluginLoadCallback, options: IConfigurationOptions) => void;

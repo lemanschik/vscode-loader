@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Configuration, IDefineFunc, INodeCachedDataConfiguration, IRequireFunc } from "./configuration";
-import { Environment, global, _commonjsGlobal } from "./env";
-import { ILoaderEventRecorder, LoaderEventType } from "./loaderEvents";
-import { Utilities } from "./utils";
+import { Configuration, IDefineFunc, INodeCachedDataConfiguration, IRequireFunc } from "./configuration.js";
+import { Environment, global, _commonjsGlobal } from "./env.js";
+import { ILoaderEventRecorder, LoaderEventType } from "./loaderEvents.js";
+import { Utilities } from "./utils.js";
 
 export interface IModuleManager {
 	getGlobalAMDDefineFunc(): IDefineFunc;

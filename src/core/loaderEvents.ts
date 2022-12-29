@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Utilities } from "./utils";
+import { Utilities } from "./utils.js";
 
 export const enum LoaderEventType {
 	LoaderAvailable = 1,

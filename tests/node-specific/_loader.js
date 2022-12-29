@@ -1,1 +1,1 @@
-module.exports = require('../../src/loader');
+module.exports = import('../../src/loader/main.js');

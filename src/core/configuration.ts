@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Environment } from "./env";
-import { LoaderEvent } from "./loaderEvents";
-import { IBuildModuleInfo } from "./moduleManager";
-import { Utilities } from "./utils";
+import { Environment } from "./env.js";
+import { LoaderEvent } from "./loaderEvents.js";
+import { IBuildModuleInfo } from "./moduleManager.js";
+import { Utilities } from "./utils.js";
 
 
 
